@@ -28,12 +28,53 @@
             --border-radius: 12px;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
-            --container-width: 800px;
+            --container-width: 960px;
             --spacing-xs: 4px;
             --spacing-sm: 8px;
             --spacing-md: 16px;
             --spacing-lg: 24px;
             --spacing-xl: 32px;
+            --button-padding-vertical: 10px;
+            --button-padding-horizontal: 24px;
+            --button-font-size: 1rem;
+            --question-font-size: 2rem;
+        }
+
+        body[data-question-display="focus"] .question-container {
+            background: linear-gradient(135deg, rgba(79, 195, 247, 0.15), rgba(74, 111, 165, 0.15));
+            border: 2px solid rgba(79, 195, 247, 0.2);
+        }
+
+        body[data-question-display="compact"] .question-container {
+            padding: var(--spacing-md);
+            border-radius: calc(var(--border-radius) / 2);
+            font-size: 0.9em;
+        }
+
+        body[data-question-display="chalkboard"] .question-container {
+            background: #1b4332;
+            color: #f1faee;
+            border: 2px solid rgba(241, 250, 238, 0.2);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.25);
+            font-family: 'Patrick Hand', 'Segoe UI', sans-serif;
+        }
+
+        body[data-button-size="small"] {
+            --button-padding-vertical: 8px;
+            --button-padding-horizontal: 16px;
+            --button-font-size: 0.9rem;
+        }
+
+        body[data-button-size="medium"] {
+            --button-padding-vertical: 12px;
+            --button-padding-horizontal: 24px;
+            --button-font-size: 1rem;
+        }
+
+        body[data-button-size="large"] {
+            --button-padding-vertical: 16px;
+            --button-padding-horizontal: 32px;
+            --button-font-size: 1.15rem;
         }
 
         body {
@@ -170,7 +211,7 @@
 
         .btn {
             display: inline-block;
-            padding: var(--spacing-sm) var(--spacing-lg);
+            padding: var(--button-padding-vertical) var(--button-padding-horizontal);
             background-color: var(--primary-color);
             color: white;
             border: none;
@@ -179,7 +220,178 @@
             transition: var(--transition);
             font-weight: 500;
             text-align: center;
-            font-size: 1rem;
+            font-size: var(--button-font-size);
+        }
+
+        /* Dynamic Theme Palettes */
+        body[data-theme="light"] {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --accent-color: #4fc3f7;
+            --background-color: #f7f9fc;
+            --card-color: #ffffff;
+            --text-color: #2d3142;
+            --text-light: #6b778d;
+        }
+
+        body[data-theme="dark"] {
+            --primary-color: #1f4068;
+            --secondary-color: #16213e;
+            --accent-color: #e94560;
+            --background-color: #0f172a;
+            --card-color: #111827;
+            --text-color: #f8fafc;
+            --text-light: #94a3b8;
+        }
+
+        body[data-theme="minimalis"] {
+            --primary-color: #2b2d42;
+            --secondary-color: #8d99ae;
+            --accent-color: #ef233c;
+            --background-color: #edf2f4;
+            --card-color: #ffffff;
+            --text-color: #2b2d42;
+            --text-light: #8d99ae;
+        }
+
+        body[data-theme="ocean"] {
+            --primary-color: #006994;
+            --secondary-color: #003554;
+            --accent-color: #00a6fb;
+            --background-color: #e0f7fa;
+            --card-color: #ffffff;
+            --text-color: #022b3a;
+            --text-light: #3c6e71;
+        }
+
+        body[data-theme="forest"] {
+            --primary-color: #386641;
+            --secondary-color: #2a9d8f;
+            --accent-color: #f4a261;
+            --background-color: #f0f7f4;
+            --card-color: #ffffff;
+            --text-color: #1b4332;
+            --text-light: #52796f;
+        }
+
+        body[data-theme="sunset"] {
+            --primary-color: #f25f5c;
+            --secondary-color: #ff9f1c;
+            --accent-color: #ffe066;
+            --background-color: #fff5e6;
+            --card-color: #ffffff;
+            --text-color: #6d597a;
+            --text-light: #b56576;
+        }
+
+        body[data-theme="retro"] {
+            --primary-color: #ff6b6b;
+            --secondary-color: #f7b801;
+            --accent-color: #6a4c93;
+            --background-color: #fdf0d5;
+            --card-color: #ffffff;
+            --text-color: #2b2d42;
+            --text-light: #9a8c98;
+        }
+
+        body[data-theme="monochrome"] {
+            --primary-color: #4f4f4f;
+            --secondary-color: #2f2f2f;
+            --accent-color: #8f8f8f;
+            --background-color: #f5f5f5;
+            --card-color: #ffffff;
+            --text-color: #1c1c1c;
+            --text-light: #6d6d6d;
+        }
+
+        body[data-theme="neon"] {
+            --primary-color: #00f5d4;
+            --secondary-color: #ff0a54;
+            --accent-color: #f15bb5;
+            --background-color: #050505;
+            --card-color: #0f0f0f;
+            --text-color: #f8f9fa;
+            --text-light: #adb5bd;
+        }
+
+        body[data-theme="pastel"] {
+            --primary-color: #a2d2ff;
+            --secondary-color: #ffafcc;
+            --accent-color: #cdb4db;
+            --background-color: #fdf0f5;
+            --card-color: #ffffff;
+            --text-color: #5c5470;
+            --text-light: #9f86c0;
+        }
+
+        body[data-theme="autumn"] {
+            --primary-color: #9c6644;
+            --secondary-color: #c49d78;
+            --accent-color: #ef8354;
+            --background-color: #fff5eb;
+            --card-color: #ffffff;
+            --text-color: #5a3d2b;
+            --text-light: #b08968;
+        }
+
+        body[data-theme="space"] {
+            --primary-color: #5a189a;
+            --secondary-color: #240046;
+            --accent-color: #80ffdb;
+            --background-color: #03071e;
+            --card-color: #0b132b;
+            --text-color: #f5f3f4;
+            --text-light: #adb5bd;
+        }
+
+        body[data-theme="colorful"] {
+            --primary-color: #ff6f59;
+            --secondary-color: #254e70;
+            --accent-color: #16db93;
+            --background-color: #f6f7f8;
+            --card-color: #ffffff;
+            --text-color: #2e294e;
+            --text-light: #6c757d;
+        }
+
+        body[data-theme="cyberpunk"] {
+            --primary-color: #ff007f;
+            --secondary-color: #5900ff;
+            --accent-color: #00f0ff;
+            --background-color: #050014;
+            --card-color: #0d0221;
+            --text-color: #f8f9fa;
+            --text-light: #9b9b9b;
+        }
+
+        body[data-theme="coffee"] {
+            --primary-color: #6f4e37;
+            --secondary-color: #b08968;
+            --accent-color: #ddb892;
+            --background-color: #f3e9dc;
+            --card-color: #fff8f0;
+            --text-color: #3c2f2f;
+            --text-light: #8c7158;
+        }
+
+        body[data-theme="candy"] {
+            --primary-color: #ff85a1;
+            --secondary-color: #ffbd39;
+            --accent-color: #8acb88;
+            --background-color: #fff0f6;
+            --card-color: #ffffff;
+            --text-color: #7c3f58;
+            --text-light: #d16ba5;
+        }
+
+        body[data-theme="sakura"] {
+            --primary-color: #ef9a9a;
+            --secondary-color: #f48fb1;
+            --accent-color: #ce93d8;
+            --background-color: #fff4f6;
+            --card-color: #ffffff;
+            --text-color: #6f2c3f;
+            --text-light: #b56576;
         }
 
         .btn:hover {
@@ -246,9 +458,37 @@
         }
 
         .question {
-            font-size: 2rem;
+            font-size: var(--question-font-size);
             font-weight: 600;
             margin-bottom: var(--spacing-md);
+        }
+
+        .question-steps {
+            margin-top: var(--spacing-md);
+            text-align: left;
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .question-steps ol {
+            padding-left: 1.25rem;
+        }
+
+        .question-steps li {
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .question-note {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: var(--spacing-xs);
+        }
+
+        .question-expression {
+            display: block;
+            margin-top: var(--spacing-sm);
+            font-size: calc(var(--question-font-size) * 0.9);
         }
 
         .answer-container {
@@ -494,6 +734,10 @@
                             <input type="checkbox" id="percentage">
                             <label for="percentage">Percentage</label>
                         </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pemdas">
+                            <label for="pemdas">PEMDAS (Fractions &amp; Decimals)</label>
+                        </div>
                     </div>
                 </div>
                 
@@ -530,6 +774,71 @@
                     </div>
                 </div>
             </div>
+
+            <div class="settings-section">
+                <h3>Personalize Experience</h3>
+                <div class="input-group">
+                    <label for="themeSelector">Theme:</label>
+                    <select id="themeSelector">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="minimalis">Minimalis</option>
+                        <option value="ocean">Ocean</option>
+                        <option value="forest">Forest</option>
+                        <option value="sunset">Sunset</option>
+                        <option value="retro">Retro</option>
+                        <option value="monochrome">Monochrome</option>
+                        <option value="neon">Neon</option>
+                        <option value="pastel">Pastel</option>
+                        <option value="autumn">Autumn</option>
+                        <option value="space">Space</option>
+                        <option value="colorful">Colorful</option>
+                        <option value="cyberpunk">Cyberpunk</option>
+                        <option value="coffee">Coffee</option>
+                        <option value="candy">Candy</option>
+                        <option value="sakura">Sakura</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="buttonSizeSelector">Button Size:</label>
+                    <select id="buttonSizeSelector">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="questionDisplaySelector">Question Display Style:</label>
+                    <select id="questionDisplaySelector">
+                        <option value="standard">Standard</option>
+                        <option value="focus">Focus Highlight</option>
+                        <option value="compact">Compact</option>
+                        <option value="chalkboard">Chalkboard</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="submissionMethodSelector">Answer Submission:</label>
+                    <select id="submissionMethodSelector">
+                        <option value="button">Button Only</option>
+                        <option value="enter">Enter Key</option>
+                        <option value="both" selected>Button + Enter</option>
+                        <option value="auto">Auto When Confident</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="showPemdasSteps">
+                    <label for="showPemdasSteps">Show PEMDAS breakdown</label>
+                </div>
+
+                <div class="checkbox-item">
+                    <input type="checkbox" id="soundToggle">
+                    <label for="soundToggle">Enable subtle feedback sounds</label>
+                </div>
+            </div>
             
             <div class="input-group">
                 <label for="questionCount">Number of Questions:</label>
@@ -553,11 +862,12 @@
             
             <div class="question-container">
                 <div class="question" id="question">8 + 5 = ?</div>
+                <div class="question-steps hidden" id="questionSteps"></div>
             </div>
             
             <div class="answer-container">
-                <input type="number" id="answer" class="answer-input" placeholder="Your answer">
-                
+                <input type="text" id="answer" class="answer-input" placeholder="Enter answer (e.g., 3, 2.5, 1/2)">
+
                 <div id="divisionResults" class="division-result hidden">
                     <div class="input-group">
                         <label for="quotient">Quotient:</label>
@@ -568,8 +878,9 @@
                         <input type="number" id="remainder" class="answer-input">
                     </div>
                 </div>
-                
+
                 <button id="submitAnswerBtn" class="btn btn-large">Submit Answer</button>
+                <div id="submissionHint" class="progress-info"></div>
             </div>
             
             <div class="progress-info">
@@ -647,6 +958,13 @@
             isCorrect: [],
             operationTypes: [],
             difficulty: 'normal', // 'easy', 'normal', 'hard'
+            theme: 'light',
+            buttonSize: 'medium',
+            questionDisplay: 'standard',
+            submissionMethod: 'both',
+            showPemdasSteps: false,
+            soundEnabled: false,
+            recommendedDifficulty: 'normal'
         };
 
         // DOM Elements
@@ -666,6 +984,7 @@
         const timerDurationSlider = document.getElementById('timerDuration');
         const timerDurationValue = document.getElementById('timerDurationValue');
         const questionElement = document.getElementById('question');
+        const questionStepsElement = document.getElementById('questionSteps');
         const answerInput = document.getElementById('answer');
         const divisionResults = document.getElementById('divisionResults');
         const quotientInput = document.getElementById('quotient');
@@ -677,6 +996,13 @@
         const fastestTimeValue = document.getElementById('fastestTimeValue');
         const improvedByValue = document.getElementById('improvedByValue');
         const adaptiveFeedback = document.getElementById('adaptiveFeedback');
+        const submissionHint = document.getElementById('submissionHint');
+        const themeSelector = document.getElementById('themeSelector');
+        const buttonSizeSelector = document.getElementById('buttonSizeSelector');
+        const submissionMethodSelector = document.getElementById('submissionMethodSelector');
+        const questionDisplaySelector = document.getElementById('questionDisplaySelector');
+        const showPemdasStepsCheckbox = document.getElementById('showPemdasSteps');
+        const soundToggle = document.getElementById('soundToggle');
 
         // Operation checkbox references
         const operationCheckboxes = {
@@ -685,8 +1011,13 @@
             multiplication: document.getElementById('multiplication'),
             division: document.getElementById('division'),
             exponentiation: document.getElementById('exponentiation'),
-            percentage: document.getElementById('percentage')
+            percentage: document.getElementById('percentage'),
+            pemdas: document.getElementById('pemdas')
         };
+
+        let performanceChartInstance = null;
+        let autoSubmitTimeout = null;
+        let audioContext = null;
 
         // Initialize application
         function init() {
@@ -697,15 +1028,52 @@
             submitAnswerBtn.addEventListener('click', checkAnswer);
             restartQuizBtn.addEventListener('click', resetQuiz);
             adaptiveQuizBtn.addEventListener('click', startAdaptiveQuiz);
-            answerInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') checkAnswer();
+            answerInput.addEventListener('keydown', handleAnswerKeyDown);
+            answerInput.addEventListener('input', handleAnswerInput);
+            quotientInput.addEventListener('keydown', handleAnswerKeyDown);
+            remainderInput.addEventListener('keydown', handleAnswerKeyDown);
+            quotientInput.addEventListener('input', handleAnswerInput);
+            remainderInput.addEventListener('input', handleAnswerInput);
+
+            themeSelector.addEventListener('change', () => {
+                applyTheme(themeSelector.value);
+                saveUserPreferences();
             });
-            
+            buttonSizeSelector.addEventListener('change', () => {
+                applyButtonSize(buttonSizeSelector.value);
+                saveUserPreferences();
+            });
+            questionDisplaySelector.addEventListener('change', () => {
+                applyQuestionDisplay(questionDisplaySelector.value);
+                saveUserPreferences();
+                displayQuestion();
+            });
+            submissionMethodSelector.addEventListener('change', () => {
+                applySubmissionMethod(submissionMethodSelector.value);
+                saveUserPreferences();
+            });
+            showPemdasStepsCheckbox.addEventListener('change', () => {
+                quizState.showPemdasSteps = showPemdasStepsCheckbox.checked;
+                saveUserPreferences();
+                displayQuestion();
+            });
+            soundToggle.addEventListener('change', () => {
+                quizState.soundEnabled = soundToggle.checked;
+                if (quizState.soundEnabled) {
+                    initAudioContext();
+                }
+                saveUserPreferences();
+            });
+
             // Load saved preferences if available
             loadUserPreferences();
-            
+
             // Initial UI setup
             updateTimerDurationDisplay();
+            applyTheme(quizState.theme);
+            applyButtonSize(quizState.buttonSize);
+            applyQuestionDisplay(quizState.questionDisplay);
+            applySubmissionMethod(quizState.submissionMethod);
         }
 
         // Toggle timer settings visibility
@@ -716,6 +1084,152 @@
         // Update timer duration display
         function updateTimerDurationDisplay() {
             timerDurationValue.textContent = timerDurationSlider.value;
+        }
+
+        function applyTheme(theme) {
+            quizState.theme = theme;
+            document.body.setAttribute('data-theme', theme);
+        }
+
+        function applyButtonSize(size) {
+            quizState.buttonSize = size;
+            document.body.setAttribute('data-button-size', size);
+        }
+
+        function applyQuestionDisplay(style) {
+            quizState.questionDisplay = style;
+            document.body.setAttribute('data-question-display', style);
+        }
+
+        function applySubmissionMethod(method) {
+            quizState.submissionMethod = method;
+            submitAnswerBtn.classList.toggle('hidden', method === 'enter' || method === 'auto');
+            submitAnswerBtn.disabled = method === 'enter' || method === 'auto';
+
+            if (method === 'button') {
+                submissionHint.textContent = 'Click the button to submit your answer.';
+            } else if (method === 'enter') {
+                submissionHint.textContent = 'Press Enter to submit your answer instantly.';
+            } else if (method === 'both') {
+                submitAnswerBtn.disabled = false;
+                submissionHint.textContent = 'Use Enter or click the button when you are ready.';
+            } else if (method === 'auto') {
+                submissionHint.textContent = 'Auto-check enabled. Answers submit when they appear correct.';
+            }
+        }
+
+        function handleAnswerKeyDown(event) {
+            if ((quizState.submissionMethod === 'enter' || quizState.submissionMethod === 'both') && event.key === 'Enter') {
+                event.preventDefault();
+                checkAnswer();
+            }
+        }
+
+        function handleAnswerInput() {
+            if (quizState.submissionMethod === 'auto') {
+                scheduleAutoSubmit();
+            }
+        }
+
+        function scheduleAutoSubmit() {
+            if (autoSubmitTimeout) {
+                clearTimeout(autoSubmitTimeout);
+            }
+
+            autoSubmitTimeout = setTimeout(() => {
+                attemptAutoSubmit();
+            }, 400);
+        }
+
+        function attemptAutoSubmit() {
+            const currentQ = quizState.questions[quizState.currentQuestion];
+            if (!currentQ) return;
+
+            if (currentQ.operationType === 'division') {
+                const quotient = parseInt(quotientInput.value, 10);
+                const remainder = parseInt(remainderInput.value, 10);
+                if (isNaN(quotient) || isNaN(remainder)) return;
+
+                if (quotient === currentQ.answer[0] && remainder === currentQ.answer[1]) {
+                    checkAnswer();
+                }
+            } else {
+                const parsed = parseUserInput(answerInput.value);
+                if (parsed === null) return;
+
+                let tolerance = 0;
+                if (currentQ.operationType === 'percentage' || currentQ.operationType === 'pemdas') {
+                    tolerance = 0.01;
+                }
+
+                if (Math.abs(parsed - currentQ.answer) <= tolerance) {
+                    checkAnswer();
+                }
+            }
+        }
+
+        function parseUserInput(rawValue) {
+            if (typeof rawValue !== 'string') return null;
+
+            const trimmed = rawValue.trim();
+            if (!trimmed) return null;
+
+            const fractionMatch = trimmed.match(/^(-?\d+)\s*\/\s*(-?\d+)$/);
+            if (fractionMatch) {
+                const numerator = parseFloat(fractionMatch[1]);
+                const denominator = parseFloat(fractionMatch[2]);
+                if (denominator === 0) return null;
+                return numerator / denominator;
+            }
+
+            const normalized = trimmed.replace(',', '.');
+            const parsed = Number(normalized);
+            return Number.isFinite(parsed) ? parsed : null;
+        }
+
+        function formatNumber(value) {
+            if (!Number.isFinite(value)) return value;
+            const rounded = Math.round((value + Number.EPSILON) * 1000) / 1000;
+            return parseFloat(rounded.toFixed(3)).toString();
+        }
+
+        function initAudioContext() {
+            if (!audioContext) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioContext = new AudioContextClass();
+                }
+            }
+        }
+
+        function playFeedbackSound(type) {
+            if (!quizState.soundEnabled) return;
+            if (!audioContext) {
+                initAudioContext();
+            }
+            if (!audioContext) return;
+
+            const frequencies = {
+                correct: 880,
+                incorrect: 220,
+                timeup: 180
+            };
+
+            const duration = 0.18;
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.type = 'sine';
+            oscillator.frequency.value = frequencies[type] || 440;
+            gainNode.gain.setValueAtTime(0.0001, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.2, audioContext.currentTime + 0.01);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
         }
 
         // Load user preferences from localStorage
@@ -748,6 +1262,33 @@
                     timerDurationSlider.value = preferences.timerDuration;
                     updateTimerDurationDisplay();
                 }
+                if (preferences.theme) {
+                    themeSelector.value = preferences.theme;
+                    applyTheme(preferences.theme);
+                }
+                if (preferences.buttonSize) {
+                    buttonSizeSelector.value = preferences.buttonSize;
+                    applyButtonSize(preferences.buttonSize);
+                }
+                if (preferences.questionDisplay) {
+                    questionDisplaySelector.value = preferences.questionDisplay;
+                    applyQuestionDisplay(preferences.questionDisplay);
+                }
+                if (preferences.submissionMethod) {
+                    submissionMethodSelector.value = preferences.submissionMethod;
+                    applySubmissionMethod(preferences.submissionMethod);
+                }
+                if (preferences.showPemdasSteps !== undefined) {
+                    showPemdasStepsCheckbox.checked = preferences.showPemdasSteps;
+                    quizState.showPemdasSteps = preferences.showPemdasSteps;
+                }
+                if (preferences.soundEnabled !== undefined) {
+                    soundToggle.checked = preferences.soundEnabled;
+                    quizState.soundEnabled = preferences.soundEnabled;
+                    if (quizState.soundEnabled) {
+                        initAudioContext();
+                    }
+                }
             }
         }
 
@@ -760,7 +1301,13 @@
                 exponentValue: parseInt(document.getElementById('exponentValue').value),
                 questionCount: parseInt(document.getElementById('questionCount').value),
                 timerEnabled: timerEnabledCheckbox.checked,
-                timerDuration: parseInt(timerDurationSlider.value)
+                timerDuration: parseInt(timerDurationSlider.value),
+                theme: quizState.theme,
+                buttonSize: quizState.buttonSize,
+                questionDisplay: quizState.questionDisplay,
+                submissionMethod: quizState.submissionMethod,
+                showPemdasSteps: quizState.showPemdasSteps,
+                soundEnabled: quizState.soundEnabled
             };
             
             // Save operation selections
@@ -793,7 +1340,18 @@
             quizState.totalQuestions = parseInt(document.getElementById('questionCount').value);
             quizState.timerEnabled = timerEnabledCheckbox.checked;
             quizState.timerDuration = parseInt(timerDurationSlider.value);
-            
+            quizState.theme = themeSelector.value;
+            quizState.buttonSize = buttonSizeSelector.value;
+            quizState.questionDisplay = questionDisplaySelector.value;
+            quizState.submissionMethod = submissionMethodSelector.value;
+            quizState.showPemdasSteps = showPemdasStepsCheckbox.checked;
+            quizState.soundEnabled = soundToggle.checked;
+
+            applyTheme(quizState.theme);
+            applyButtonSize(quizState.buttonSize);
+            applyQuestionDisplay(quizState.questionDisplay);
+            applySubmissionMethod(quizState.submissionMethod);
+
             // Save preferences
             saveUserPreferences();
             
@@ -819,17 +1377,140 @@
         }
 
         // Generate questions for the quiz
+        function applyMathOperation(a, b, operator) {
+            switch (operator) {
+                case '+':
+                    return a + b;
+                case '-':
+                    return a - b;
+                case '*':
+                    return a * b;
+                case '/':
+                    return a / b;
+                default:
+                    return b;
+            }
+        }
+
+        function generatePemdasProblem(difficulty) {
+            const fractionOptions = [
+                { display: '1/2', eval: '(1/2)', value: 1 / 2 },
+                { display: '3/4', eval: '(3/4)', value: 3 / 4 },
+                { display: '2/5', eval: '(2/5)', value: 2 / 5 },
+                { display: '5/8', eval: '(5/8)', value: 5 / 8 },
+                { display: '7/10', eval: '(7/10)', value: 7 / 10 },
+                { display: '9/10', eval: '(9/10)', value: 9 / 10 }
+            ];
+
+            const decimalOptions = {
+                easy: [0.4, 0.5, 0.6, 0.75, 1.2, 1.5],
+                normal: [0.25, 0.5, 0.75, 1.25, 1.5, 2.4, 2.75],
+                hard: [0.2, 0.45, 0.65, 1.75, 2.5, 3.25, 4.5]
+            };
+
+            const operationPool = [
+                { symbol: '+', display: '+', label: 'penjumlahan' },
+                { symbol: '-', display: '−', label: 'pengurangan' },
+                { symbol: '*', display: '×', label: 'perkalian' },
+                { symbol: '/', display: '÷', label: 'pembagian' }
+            ];
+
+            const availableDecimals = decimalOptions[difficulty] || decimalOptions.normal;
+
+            function randomItem(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            function getComponent(forceFraction = false) {
+                if (forceFraction) {
+                    return { ...randomItem(fractionOptions) };
+                }
+                const useFraction = Math.random() > 0.5;
+                if (useFraction) {
+                    return { ...randomItem(fractionOptions) };
+                }
+                const decimalValue = randomItem(availableDecimals);
+                return {
+                    display: formatNumber(decimalValue),
+                    eval: decimalValue.toString(),
+                    value: decimalValue
+                };
+            }
+
+            const firstComponent = getComponent(true); // guarantee fraction
+            const secondDecimalValue = randomItem(availableDecimals);
+            const second = {
+                display: formatNumber(secondDecimalValue),
+                eval: secondDecimalValue.toString(),
+                value: secondDecimalValue
+            };
+            const third = getComponent();
+
+            const components = [firstComponent, second, third];
+            const template = Math.random() > 0.5 ? 'left' : 'right';
+            const operations = [];
+
+            while (operations.length < 2) {
+                const candidate = randomItem(operationPool);
+                if (difficulty === 'easy' && candidate.symbol === '/') continue;
+                operations.push(candidate);
+            }
+
+            let expressionDisplay = '';
+            let evaluationExpression = '';
+            const steps = [];
+            let intermediate = 0;
+
+            if (template === 'left') {
+                expressionDisplay = `(${components[0].display} ${operations[0].display} ${components[1].display}) ${operations[1].display} ${components[2].display}`;
+                evaluationExpression = `(${components[0].eval || components[0].display} ${operations[0].symbol} ${components[1].eval || components[1].display}) ${operations[1].symbol} ${components[2].eval || components[2].display}`;
+                intermediate = applyMathOperation(components[0].value, components[1].value, operations[0].symbol);
+                steps.push(`Hitung bagian dalam kurung terlebih dahulu: ${components[0].display} ${operations[0].display} ${components[1].display} = ${formatNumber(intermediate)}`);
+                const finalValue = applyMathOperation(intermediate, components[2].value, operations[1].symbol);
+                steps.push(`Kemudian ${operations[1].label} dengan hasil sebelumnya: ${formatNumber(intermediate)} ${operations[1].display} ${components[2].display} = ${formatNumber(finalValue)}`);
+                intermediate = finalValue;
+            } else {
+                expressionDisplay = `${components[0].display} ${operations[0].display} (${components[1].display} ${operations[1].display} ${components[2].display})`;
+                evaluationExpression = `${components[0].eval || components[0].display} ${operations[0].symbol} (${components[1].eval || components[1].display} ${operations[1].symbol} ${components[2].eval || components[2].display})`;
+                intermediate = applyMathOperation(components[1].value, components[2].value, operations[1].symbol);
+                steps.push(`Selesaikan kurung terlebih dahulu: ${components[1].display} ${operations[1].display} ${components[2].display} = ${formatNumber(intermediate)}`);
+                const finalValue = applyMathOperation(components[0].value, intermediate, operations[0].symbol);
+                steps.push(`Lanjutkan dengan ${operations[0].label}: ${components[0].display} ${operations[0].display} ${formatNumber(intermediate)} = ${formatNumber(finalValue)}`);
+                intermediate = finalValue;
+            }
+
+            // Evaluate final answer using Function constructor for reliability
+            const safeExpression = evaluationExpression.replace(/÷/g, '/').replace(/×/g, '*');
+            let computedAnswer;
+            try {
+                computedAnswer = new Function(`return ${safeExpression};`)();
+            } catch (error) {
+                computedAnswer = intermediate;
+            }
+
+            const finalAnswer = Math.round(computedAnswer * 100) / 100;
+
+            return {
+                question: `${expressionDisplay} = ?`,
+                questionHtml: `<div>Selesaikan menggunakan aturan PEMDAS:</div><div class="question-expression"><strong>${expressionDisplay}</strong></div><span class="question-note">Gunakan dua angka di belakang koma jika diperlukan.</span>`,
+                answer: finalAnswer,
+                operationType: 'pemdas',
+                steps
+            };
+        }
+
         function generateQuestions(leftLimit, rightLimit) {
             const exponentValue = parseInt(document.getElementById('exponentValue').value);
             quizState.questions = [];
             quizState.operationTypes = [];
-            
+
             for (let i = 0; i < quizState.totalQuestions; i++) {
                 const operationType = quizState.operations[Math.floor(Math.random() * quizState.operations.length)];
                 quizState.operationTypes.push(operationType);
-                
-                let leftNum, rightNum, question, answer;
-                
+
+                let leftNum, rightNum;
+                let questionData = null;
+
                 // Generate numbers based on difficulty (for adaptive quizzes)
                 if (quizState.difficulty === 'easy') {
                     leftNum = Math.floor(Math.random() * (leftLimit / 2)) + 1;
@@ -851,58 +1532,100 @@
                 // Generate question and answer based on operation type
                 switch (operationType) {
                     case 'addition':
-                        question = `${leftNum} + ${rightNum} = ?`;
-                        answer = leftNum + rightNum;
+                        questionData = {
+                            question: `${leftNum} + ${rightNum} = ?`,
+                            answer: leftNum + rightNum,
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
                         break;
                     case 'subtraction':
-                        // Ensure leftNum is larger for beginners in easy mode
-                        if (quizState.difficulty === 'easy') {
-                            if (leftNum < rightNum) [leftNum, rightNum] = [rightNum, leftNum];
+                        if (quizState.difficulty === 'easy' && leftNum < rightNum) {
+                            [leftNum, rightNum] = [rightNum, leftNum];
                         }
-                        question = `${leftNum} - ${rightNum} = ?`;
-                        answer = leftNum - rightNum;
+                        questionData = {
+                            question: `${leftNum} - ${rightNum} = ?`,
+                            answer: leftNum - rightNum,
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
                         break;
                     case 'multiplication':
-                        question = `${leftNum} × ${rightNum} = ?`;
-                        answer = leftNum * rightNum;
+                        questionData = {
+                            question: `${leftNum} × ${rightNum} = ?`,
+                            answer: leftNum * rightNum,
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
                         break;
                     case 'division':
-                        if (rightNum === 0) rightNum = 1; // Avoid division by zero
-                        question = `${leftNum} ÷ ${rightNum} = ?`;
-                        // For division, we store an array with quotient and remainder
-                        answer = [Math.floor(leftNum / rightNum), leftNum % rightNum];
+                        if (rightNum === 0) rightNum = 1;
+                        questionData = {
+                            question: `${leftNum} ÷ ${rightNum} = ?`,
+                            answer: [Math.floor(leftNum / rightNum), leftNum % rightNum],
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
                         break;
                     case 'exponentiation':
-                        // Limit exponent size for usability
                         rightNum = Math.min(rightNum, exponentValue);
-                        question = `${leftNum} ^ ${rightNum} = ?`;
-                        answer = Math.pow(leftNum, rightNum);
+                        questionData = {
+                            question: `${leftNum} ^ ${rightNum} = ?`,
+                            answer: Math.pow(leftNum, rightNum),
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
                         break;
                     case 'percentage':
-                        question = `${leftNum}% of ${rightNum} = ?`;
-                        answer = (leftNum / 100) * rightNum;
+                        questionData = {
+                            question: `${leftNum}% of ${rightNum} = ?`,
+                            answer: (leftNum / 100) * rightNum,
+                            operationType,
+                            leftNum,
+                            rightNum
+                        };
+                        break;
+                    case 'pemdas':
+                        questionData = generatePemdasProblem(quizState.difficulty);
                         break;
                 }
-                
-                quizState.questions.push({
-                    question,
-                    answer,
-                    operationType,
-                    leftNum,
-                    rightNum
-                });
+
+                if (questionData) {
+                    quizState.questions.push(questionData);
+                }
             }
         }
 
         // Display the current question
         function displayQuestion() {
             const currentQ = quizState.questions[quizState.currentQuestion];
-            questionElement.textContent = currentQ.question;
-            
+            if (autoSubmitTimeout) {
+                clearTimeout(autoSubmitTimeout);
+                autoSubmitTimeout = null;
+            }
+
+            applySubmissionMethod(quizState.submissionMethod);
+
+            const questionContent = currentQ.questionHtml || currentQ.question;
+            questionElement.innerHTML = questionContent;
+
+            if (quizState.showPemdasSteps && currentQ.steps && currentQ.steps.length > 0) {
+                questionStepsElement.classList.remove('hidden');
+                questionStepsElement.innerHTML = `<ol>${currentQ.steps.map(step => `<li>${step}</li>`).join('')}</ol>`;
+            } else {
+                questionStepsElement.classList.add('hidden');
+                questionStepsElement.innerHTML = '';
+            }
+
             // Update progress display
             questionProgress.textContent = `Question ${quizState.currentQuestion + 1} of ${quizState.totalQuestions}`;
             currentScoreDisplay.textContent = `Score: ${quizState.score} / ${quizState.currentQuestion}`;
-            
+
             // Show/hide division results inputs
             if (currentQ.operationType === 'division') {
                 divisionResults.classList.remove('hidden');
@@ -910,13 +1633,16 @@
                 quotientInput.value = '';
                 remainderInput.value = '';
                 quotientInput.focus();
+                if (quizState.submissionMethod === 'auto') {
+                    submissionHint.textContent = 'Fill quotient and remainder. Submission triggers when both are correct.';
+                }
             } else {
                 divisionResults.classList.add('hidden');
                 answerInput.classList.remove('hidden');
                 answerInput.value = '';
                 answerInput.focus();
             }
-            
+
             // Reset and start timer if enabled
             if (quizState.timerEnabled) {
                 timerContainer.classList.remove('hidden');
@@ -969,7 +1695,9 @@
         function handleTimeUp() {
             // Record time taken as max time
             quizState.timeTaken[quizState.currentQuestion] = quizState.timerDuration;
-            
+
+            playFeedbackSound('timeup');
+
             // Move to next question
             moveToNextQuestion();
         }
@@ -978,53 +1706,56 @@
         function checkAnswer() {
             const currentQ = quizState.questions[quizState.currentQuestion];
             let userAnswer, isCorrect = false;
-            
+
             // Stop timer
             if (quizState.timerInterval) {
                 clearInterval(quizState.timerInterval);
             }
-            
+
             // Calculate time taken
             const timeTaken = (Date.now() - quizState.startTime) / 1000;
             quizState.timeTaken[quizState.currentQuestion] = Math.min(timeTaken, quizState.timerDuration);
-            
+
             // Get and validate user's answer
             if (currentQ.operationType === 'division') {
-                const quotient = parseInt(quotientInput.value);
-                const remainder = parseInt(remainderInput.value);
-                
+                const quotient = parseInt(quotientInput.value, 10);
+                const remainder = parseInt(remainderInput.value, 10);
+
                 if (isNaN(quotient) || isNaN(remainder)) {
                     showAnswerError();
                     return;
                 }
-                
+
                 userAnswer = [quotient, remainder];
                 isCorrect = userAnswer[0] === currentQ.answer[0] && userAnswer[1] === currentQ.answer[1];
                 quizState.answers[quizState.currentQuestion] = userAnswer;
             } else {
-                userAnswer = parseFloat(answerInput.value);
-                
-                if (isNaN(userAnswer)) {
+                userAnswer = parseUserInput(answerInput.value);
+
+                if (userAnswer === null) {
                     showAnswerError();
                     return;
                 }
-                
-                // For percentage questions, allow a small margin of error due to rounding
-                if (currentQ.operationType === 'percentage') {
+
+                // For operations with decimals, allow a small margin of error due to rounding
+                if (currentQ.operationType === 'percentage' || currentQ.operationType === 'pemdas') {
                     isCorrect = Math.abs(userAnswer - currentQ.answer) < 0.01;
                 } else {
                     isCorrect = userAnswer === currentQ.answer;
                 }
-                
+
                 quizState.answers[quizState.currentQuestion] = userAnswer;
             }
-            
+
             // Update score and record correctness
             if (isCorrect) {
                 quizState.score++;
+                playFeedbackSound('correct');
+            } else {
+                playFeedbackSound('incorrect');
             }
             quizState.isCorrect[quizState.currentQuestion] = isCorrect;
-            
+
             // Move to next question or show results
             moveToNextQuestion();
         }
@@ -1153,7 +1884,11 @@
             }
             
             // Create chart
-            new Chart(ctx, {
+            if (performanceChartInstance) {
+                performanceChartInstance.destroy();
+            }
+
+            performanceChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -1428,7 +2163,11 @@
             if (quizState.timerInterval) {
                 clearInterval(quizState.timerInterval);
             }
-            
+            if (autoSubmitTimeout) {
+                clearTimeout(autoSubmitTimeout);
+                autoSubmitTimeout = null;
+            }
+
             // Reset UI
             resultsPanel.classList.add('hidden');
             quizInterface.classList.add('hidden');
