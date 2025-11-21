@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive math quiz application with adaptive learning and progress tracking">
+    <title>Math Quiz Pro - Learn Math Interactively</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Math Quiz</span>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <i class="fas fa-moon"></i>
+                <span id="themeText">Dark Mode</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="animate-in">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="card-title">
+                        <i class="fas fa-rocket"></i>
+                        Start Your Math Journey
+                    </h1>
+                </div>
+                <div class="card-body">
+                    <!-- Operations Selection -->
+                    <div class="form-group">
+                        <label class="form-label">Select Operations</label>
+                        <div class="operation-selector">
+                            <div class="operation-btn" data-operation="addition">
+                                <i class="fas fa-plus"></i>
+                                <span>Addition</span>
+                            </div>
+                            <div class="operation-btn" data-operation="subtraction">
+                                <i class="fas fa-minus"></i>
+                                <span>Subtraction</span>
+                            </div>
+                            <div class="operation-btn" data-operation="multiplication">
+                                <i class="fas fa-times"></i>
+                                <span>Multiplication</span>
+                            </div>
+                            <div class="operation-btn" data-operation="division">
+                                <i class="fas fa-divide"></i>
+                                <span>Division</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-2">
+                        <!-- Number of Questions -->
+                        <div class="form-group">
+                            <label class="form-label" for="numQuestions">
+                                <i class="fas fa-list-ol"></i> Number of Questions
+                            </label>
+                            <input type="number" id="numQuestions" class="form-control" min="5" max="50" value="10">
+                        </div>
+
+                        <!-- Difficulty Level -->
+                        <div class="form-group">
+                            <label class="form-label" for="difficulty">
+                                <i class="fas fa-chart-line"></i> Difficulty Level
+                            </label>
+                            <select id="difficulty" class="form-control">
+                                <option value="easy">Easy (1-10)</option>
+                                <option value="normal" selected>Normal (1-50)</option>
+                                <option value="hard">Hard (1-100)</option>
+                                <option value="expert">Expert (1-500)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Timer Settings -->
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="enableTimer" class="checkbox">
+                            <label for="enableTimer" class="form-label" style="margin-bottom: 0;">
+                                <i class="fas fa-clock"></i> Enable Timer
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="timerSettings" class="form-group hidden">
+                        <label class="form-label" for="timerDuration">Time per Question (seconds)</label>
+                        <input type="number" id="timerDuration" class="form-control" min="5" max="120" value="30">
+                    </div>
+
+                    <!-- Start Button -->
+                    <button class="btn btn-primary btn-lg" id="startQuizBtn" style="width: 100%;">
+                        <i class="fas fa-play"></i>
+                        Start Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="card mt-24" id="statsOverview">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-chart-bar"></i>
+                        Your Progress
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-value" id="totalQuizzes">0</div>
+                            <div class="stat-label">Quizzes Taken</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon info">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-value" id="averageScore">0%</div>
+                            <div class="stat-label">Average Score</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-fire"></i>
+                            </div>
+                            <div class="stat-value" id="streak">0</div>
+                            <div class="stat-label">Day Streak</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon error">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-value" id="bestScore">0%</div>
+                            <div class="stat-label">Best Score</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <div class="flex items-center justify-between">
+                        <h2 class="card-title">
+                            <i class="fas fa-brain"></i>
+                            Quiz in Progress
+                        </h2>
+                        <div id="timerDisplay" class="timer hidden">
+                            <i class="fas fa-clock"></i>
+                            <span id="timerValue">30</span>s
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Question 1 of 10</div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="question-card">
+                        <div class="question-number" id="questionNumber">Question 1</div>
+                        <div class="question-text" id="questionText">5 + 3 = ?</div>
+                        <input type="number" id="answerInput" class="form-control answer-input" placeholder="Your answer" autofocus>
+                        <div class="flex justify-center gap-16">
+                            <button class="btn btn-primary btn-lg" id="submitAnswerBtn">
+                                <i class="fas fa-check"></i>
+                                Submit Answer
+                            </button>
+                            <button class="btn btn-secondary" id="skipBtn">
+                                <i class="fas fa-forward"></i>
+                                Skip
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-flag-checkered"></i>
+                        Quiz Complete!
+                    </h2>
+                </div>
+                <div class="card-body">
+                    <div class="result-header">
+                        <div class="result-emoji" id="resultEmoji">🎉</div>
+                        <div class="result-score" id="finalScore">80%</div>
+                        <div class="result-message" id="resultMessage">Great job! Keep practicing!</div>
+                    </div>
+
+                    <!-- Detailed Stats -->
+                    <div class="stats-grid mb-24">
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="stat-value" id="correctAnswers">8</div>
+                            <div class="stat-label">Correct</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon error">
+                                <i class="fas fa-times"></i>
+                            </div>
+                            <div class="stat-value" id="incorrectAnswers">2</div>
+                            <div class="stat-label">Incorrect</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon info">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-value" id="avgTime">15s</div>
+                            <div class="stat-label">Avg Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-value" id="accuracy">80%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                    </div>
+
+                    <!-- Answer Review -->
+                    <div class="card mt-24">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-list"></i>
+                                Review Your Answers
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="answer-review" id="answerReview">
+                                <!-- Populated by JavaScript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex gap-16 mt-24">
+                        <button class="btn btn-primary btn-lg" id="retryBtn" style="flex: 1;">
+                            <i class="fas fa-redo"></i>
+                            Try Again
+                        </button>
+                        <button class="btn btn-secondary btn-lg" id="newQuizBtn" style="flex: 1;">
+                            <i class="fas fa-home"></i>
+                            New Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz State Management
+        const quizState = {
+            operations: [],
+            currentQuestion: 0,
+            totalQuestions: 10,
+            score: 0,
+            timerEnabled: false,
+            timerDuration: 30,
+            timerInterval: null,
+            timeRemaining: 0,
+            startTime: 0,
+            questions: [],
+            userAnswers: [],
+            correctAnswers: [],
+            timeTaken: [],
+            difficulty: 'normal'
+        };
+
+        // User stats (persisted in localStorage)
+        let userStats = {
+            totalQuizzes: 0,
+            totalCorrect: 0,
+            totalQuestions: 0,
+            bestScore: 0,
+            streak: 0,
+            lastQuizDate: null,
+            scores: []
+        };
+
+        // DOM Elements
+        const setupScreen = document.getElementById('setupScreen');
+        const quizScreen = document.getElementById('quizScreen');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const operationBtns = document.querySelectorAll('.operation-btn');
+        const startQuizBtn = document.getElementById('startQuizBtn');
+        const submitAnswerBtn = document.getElementById('submitAnswerBtn');
+        const skipBtn = document.getElementById('skipBtn');
+        const answerInput = document.getElementById('answerInput');
+        const questionText = document.getElementById('questionText');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerValue = document.getElementById('timerValue');
+        const enableTimerCheckbox = document.getElementById('enableTimer');
+        const timerSettings = document.getElementById('timerSettings');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeText = document.getElementById('themeText');
+
+        // Initialize
+        loadUserStats();
+        updateStatsDisplay();
+
+        // Operation Selection
+        operationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+            });
+        });
+
+        // Timer Toggle
+        enableTimerCheckbox.addEventListener('change', (e) => {
+            timerSettings.classList.toggle('hidden', !e.target.checked);
+            quizState.timerEnabled = e.target.checked;
+        });
+
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            const isDark = document.documentElement.style.getPropertyValue('--color-background') === 'var(--color-charcoal-700)';
+            
+            if (isDark) {
+                // Switch to light mode
+                document.documentElement.style.setProperty('--color-background', 'var(--color-cream-50)');
+                document.documentElement.style.setProperty('--color-surface', 'var(--color-cream-100)');
+                document.documentElement.style.setProperty('--color-text', 'var(--color-slate-900)');
+                themeToggle.querySelector('i').className = 'fas fa-moon';
+                themeText.textContent = 'Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                // Switch to dark mode
+                document.documentElement.style.setProperty('--color-background', 'var(--color-charcoal-700)');
+                document.documentElement.style.setProperty('--color-surface', 'var(--color-charcoal-800)');
+                document.documentElement.style.setProperty('--color-text', 'var(--color-gray-200)');
+                themeToggle.querySelector('i').className = 'fas fa-sun';
+                themeText.textContent = 'Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            themeToggle.click();
+        }
+
+        // Start Quiz
+        startQuizBtn.addEventListener('click', () => {
+            const selectedOps = Array.from(document.querySelectorAll('.operation-btn.active'))
+                .map(btn => btn.dataset.operation);
+            
+            if (selectedOps.length === 0) {
+                alert('Please select at least one operation!');
+                return;
+            }
+
+            quizState.operations = selectedOps;
+            quizState.totalQuestions = parseInt(document.getElementById('numQuestions').value);
+            quizState.difficulty = document.getElementById('difficulty').value;
+            quizState.timerEnabled = enableTimerCheckbox.checked;
+            quizState.timerDuration = parseInt(document.getElementById('timerDuration').value);
+            
+            generateQuestions();
+            startQuiz();
+        });
+
+        // Generate Questions
+        function generateQuestions() {
+            quizState.questions = [];
+            quizState.userAnswers = [];
+            quizState.correctAnswers = [];
+            quizState.timeTaken = [];
+
+            const ranges = {
+                easy: { min: 1, max: 10 },
+                normal: { min: 1, max: 50 },
+                hard: { min: 1, max: 100 },
+                expert: { min: 1, max: 500 }
+            };
+
+            const range = ranges[quizState.difficulty];
+
+            for (let i = 0; i < quizState.totalQuestions; i++) {
+                const operation = quizState.operations[Math.floor(Math.random() * quizState.operations.length)];
+                let num1 = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+                let num2 = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+                let question, answer;
+
+                switch(operation) {
+                    case 'addition':
+                        question = `${num1} + ${num2}`;
+                        answer = num1 + num2;
+                        break;
+                    case 'subtraction':
+                        if (num1 < num2) [num1, num2] = [num2, num1];
+                        question = `${num1} - ${num2}`;
+                        answer = num1 - num2;
+                        break;
+                    case 'multiplication':
+                        num1 = Math.floor(Math.random() * 12) + 1;
+                        num2 = Math.floor(Math.random() * 12) + 1;
+                        question = `${num1} × ${num2}`;
+                        answer = num1 * num2;
+                        break;
+                    case 'division':
+                        num2 = Math.floor(Math.random() * 12) + 1;
+                        answer = Math.floor(Math.random() * 12) + 1;
+                        num1 = num2 * answer;
+                        question = `${num1} ÷ ${num2}`;
+                        break;
+                }
+
+                quizState.questions.push({ question, answer, operation });
+                quizState.userAnswers.push(null);
+                quizState.timeTaken.push(0);
+            }
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            quizState.currentQuestion = 0;
+            quizState.score = 0;
+            quizState.startTime = Date.now();
+
+            setupScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            resultsScreen.classList.add('hidden');
+
+            showQuestion();
+        }
+
+        // Show Question
+        function showQuestion() {
+            const q = quizState.questions[quizState.currentQuestion];
+            questionNumber.textContent = `Question ${quizState.currentQuestion + 1}`;
+            questionText.textContent = `${q.question} = ?`;
+            answerInput.value = '';
+            answerInput.focus();
+
+            updateProgress();
+
+            if (quizState.timerEnabled) {
+                startTimer();
+            }
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const progress = ((quizState.currentQuestion) / quizState.totalQuestions) * 100;
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `Question ${quizState.currentQuestion + 1} of ${quizState.totalQuestions}`;
+        }
+
+        // Timer Functions
+        function startTimer() {
+            quizState.timeRemaining = quizState.timerDuration;
+            timerDisplay.classList.remove('hidden');
+            timerValue.textContent = quizState.timeRemaining;
+            timerDisplay.classList.remove('warning');
+
+            clearInterval(quizState.timerInterval);
+            quizState.timerInterval = setInterval(() => {
+                quizState.timeRemaining--;
+                timerValue.textContent = quizState.timeRemaining;
+
+                if (quizState.timeRemaining <= 5) {
+                    timerDisplay.classList.add('warning');
+                }
+
+                if (quizState.timeRemaining <= 0) {
+                    clearInterval(quizState.timerInterval);
+                    submitAnswer(true);
+                }
+            }, 1000);
+        }
+
+        // Submit Answer
+        submitAnswerBtn.addEventListener('click', () => submitAnswer(false));
+        skipBtn.addEventListener('click', () => submitAnswer(true));
+
+        answerInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                submitAnswer(false);
+            }
+        });
+
+        function submitAnswer(skipped) {
+            clearInterval(quizState.timerInterval);
+            
+            const userAnswer = skipped ? null : parseFloat(answerInput.value);
+            const correctAnswer = quizState.questions[quizState.currentQuestion].answer;
+            const timeTaken = quizState.timerEnabled ? quizState.timerDuration - quizState.timeRemaining : 0;
+
+            quizState.userAnswers[quizState.currentQuestion] = userAnswer;
+            quizState.timeTaken[quizState.currentQuestion] = timeTaken;
+
+            if (userAnswer === correctAnswer) {
+                quizState.score++;
+            }
+
+            quizState.currentQuestion++;
+
+            if (quizState.currentQuestion < quizState.totalQuestions) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Show Results
+        function showResults() {
+            setupScreen.classList.add('hidden');
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.remove('hidden');
+
+            const percentage = Math.round((quizState.score / quizState.totalQuestions) * 100);
+            const incorrect = quizState.totalQuestions - quizState.score;
+            const avgTime = quizState.timerEnabled ? 
+                Math.round(quizState.timeTaken.reduce((a, b) => a + b, 0) / quizState.totalQuestions) : 0;
+
+            document.getElementById('finalScore').textContent = `${percentage}%`;
+            document.getElementById('correctAnswers').textContent = quizState.score;
+            document.getElementById('incorrectAnswers').textContent = incorrect;
+            document.getElementById('accuracy').textContent = `${percentage}%`;
+            document.getElementById('avgTime').textContent = quizState.timerEnabled ? `${avgTime}s` : 'N/A';
+
+            // Result message and emoji
+            let message, emoji;
+            if (percentage >= 90) {
+                message = 'Perfect! You\'re a math genius! 🌟';
+                emoji = '🏆';
+            } else if (percentage >= 70) {
+                message = 'Great job! Keep up the good work!';
+                emoji = '🎉';
+            } else if (percentage >= 50) {
+                message = 'Good effort! Practice makes perfect!';
+                emoji = '👍';
+            } else {
+                message = 'Keep practicing! You\'ll get better!';
+                emoji = '💪';
+            }
+
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('resultEmoji').textContent = emoji;
+
+            // Update user stats
+            updateUserStats(percentage);
+            
+            // Show answer review
+            showAnswerReview();
+
+            // Show chart
+            showResultsChart();
+        }
+
+        // Show Answer Review
+        function showAnswerReview() {
+            const reviewContainer = document.getElementById('answerReview');
+            reviewContainer.innerHTML = '';
+
+            quizState.questions.forEach((q, index) => {
+                const userAnswer = quizState.userAnswers[index];
+                const isCorrect = userAnswer === q.answer;
+                const timeTaken = quizState.timeTaken[index];
+
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `review-item ${isCorrect ? 'correct' : 'incorrect'}`;
+                
+                reviewItem.innerHTML = `
+                    <div class="review-question">
+                        <strong>Q${index + 1}:</strong> ${q.question} = ?
+                    </div>
+                    <div class="review-answer">
+                        <span class="badge ${isCorrect ? 'badge-success' : 'badge-error'}">
+                            <i class="fas fa-${isCorrect ? 'check' : 'times'}"></i>
+                            ${userAnswer ?? 'Skipped'}
+                        </span>
+                        ${!isCorrect ? `<span style="color: var(--color-text-secondary);">Correct: ${q.answer}</span>` : ''}
+                        ${quizState.timerEnabled ? `<span style="color: var(--color-text-secondary);">${timeTaken}s</span>` : ''}
+                    </div>
+                `;
+
+                reviewContainer.appendChild(reviewItem);
+            });
+        }
+
+        // Update User Stats
+        function updateUserStats(percentage) {
+            userStats.totalQuizzes++;
+            userStats.totalCorrect += quizState.score;
+            userStats.totalQuestions += quizState.totalQuestions;
+            userStats.scores.push(percentage);
+            
+            if (percentage > userStats.bestScore) {
+                userStats.bestScore = percentage;
+            }
+
+            // Update streak
+            const today = new Date().toDateString();
+            const lastDate = userStats.lastQuizDate ? new Date(userStats.lastQuizDate).toDateString() : null;
+            
+            if (lastDate === today) {
+                // Same day, no change to streak
+            } else if (lastDate === new Date(Date.now() - 86400000).toDateString()) {
+                // Yesterday, increment streak
+                userStats.streak++;
+            } else if (!lastDate) {
+                // First quiz
+                userStats.streak = 1;
+            } else {
+                // Streak broken
+                userStats.streak = 1;
+            }
+
+            userStats.lastQuizDate = new Date().toISOString();
+
+            saveUserStats();
+            updateStatsDisplay();
+        }
+
+        // Save and Load User Stats
+        function saveUserStats() {
+            try {
+                localStorage.setItem('mathQuizStats', JSON.stringify(userStats));
+            } catch (e) {
+                console.error('Failed to save stats:', e);
+            }
+        }
+
+        function loadUserStats() {
+            try {
+                const saved = localStorage.getItem('mathQuizStats');
+                if (saved) {
+                    userStats = JSON.parse(saved);
+                }
+            } catch (e) {
+                console.error('Failed to load stats:', e);
+            }
+        }
+
+        function updateStatsDisplay() {
+            document.getElementById('totalQuizzes').textContent = userStats.totalQuizzes;
+            
+            const avgScore = userStats.totalQuestions > 0 ? 
+                Math.round((userStats.totalCorrect / userStats.totalQuestions) * 100) : 0;
+            document.getElementById('averageScore').textContent = `${avgScore}%`;
+            
+            document.getElementById('streak').textContent = userStats.streak;
+            document.getElementById('bestScore').textContent = `${userStats.bestScore}%`;
+        }
+
+        // Retry and New Quiz
+        document.getElementById('retryBtn').addEventListener('click', () => {
+            generateQuestions();
+            startQuiz();
+        });
+
+        document.getElementById('newQuizBtn').addEventListener('click', () => {
+            setupScreen.classList.remove('hidden');
+            quizScreen.classList.add('hidden');
+            resultsScreen.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>
